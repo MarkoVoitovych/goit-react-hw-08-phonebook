@@ -31,16 +31,25 @@ class App extends Component {
     }));
   };
 
+  handleFilterChange = e => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
+
   render() {
-    const { contacts } = this.state;
+    const { contacts, filter } = this.state;
     return (
       <Container>
         <h1>Phonebook</h1>
         <ContactForm OnContactAdd={this.handleContactAdd} />
 
         <h2>Contacts</h2>
-        <Filter />
-        <ContactList contacts={contacts} OnContactDelete={this.handleContactDelete} />
+        <Filter value={filter} OnFilterChange={this.handleFilterChange} />
+        <ContactList
+          contacts={contacts}
+          filterValue={filter}
+          OnContactDelete={this.handleContactDelete}
+        />
       </Container>
     );
   }
