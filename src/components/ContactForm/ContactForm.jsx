@@ -8,14 +8,12 @@ const INITIAL_STATE = {
   number: '',
 };
 
-export class ContactForm extends Component {
+class ContactForm extends Component {
   static propTypes = {
     OnContactAdd: PropTypes.func.isRequired,
   };
 
-  state = {
-    ...INITIAL_STATE,
-  };
+  state = INITIAL_STATE;
 
   handleInputChange = e => {
     const { name, value } = e.target;
@@ -31,7 +29,7 @@ export class ContactForm extends Component {
   };
 
   resetForm = () => {
-    this.setState({ ...INITIAL_STATE });
+    this.setState(INITIAL_STATE);
   };
 
   render() {
