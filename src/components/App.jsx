@@ -5,15 +5,12 @@ import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Filter from './Filter';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
-import Modal from './Modal/Modal';
 
 class App extends Component {
   state = {
     contacts: [],
     filter: '',
     error: null,
-    modalData: null,
-    isModalOpen: false,
   };
 
   async componentDidMount() {
@@ -38,10 +35,6 @@ class App extends Component {
     this.setState(prevState => ({
       contacts: [...prevState.contacts, newContact.data],
     }));
-  };
-
-  setModalData = contact => {
-    this.setState({ modalData: contact });
   };
 
   handleContactEdit = async contact => {
@@ -69,23 +62,17 @@ class App extends Component {
     }
   };
 
-  toggleModal = () => {
-    this.setState(prevState => ({
-      isModalOpen: !prevState.isModalOpen,
-    }));
-  };
-
   handleFilterChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
-  handleErrorMsgClose = () => {
+  setError = () => {
     this.setState({ error: null });
   };
 
   render() {
-    const { contacts, filter, error, modalData, isModalOpen } = this.state;
+    const { contacts, filter, error } = this.state;
     return (
       <Container>
         <MainTitle>Phonebook</MainTitle>
@@ -93,23 +80,12 @@ class App extends Component {
         <Title>Contacts</Title>
         <Filter value={filter} OnFilterChange={this.handleFilterChange} />
         {error ? (
-          <ErrorMessage
-            error={error}
-            onErrBtnClick={this.handleErrorMsgClose}
-          />
+          <ErrorMessage error={error} setError={this.setError} />
         ) : (
           <ContactList
             contacts={contacts}
             filterValue={filter}
             OnContactDelete={this.handleContactDelete}
-            OnModalOpen={this.toggleModal}
-            setModalData={this.setModalData}
-          />
-        )}
-        {isModalOpen && (
-          <Modal
-            modalData={modalData}
-            OnModalClose={this.toggleModal}
             OnContactEdit={this.handleContactEdit}
           />
         )}
