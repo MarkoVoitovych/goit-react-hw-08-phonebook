@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Item, Text, Button, BtnWrapper } from './ContactItem.styled';
 
 const ContactItem = props => {
-  const { id, name, number, OnContactDelete, OnModalOpen, handleContactEdit } =
+  const { id, name, number, OnContactDelete, OnModalOpen, setModalData } =
     props;
 
   return (
@@ -15,7 +15,7 @@ const ContactItem = props => {
           type="button"
           onClick={() => {
             OnModalOpen();
-            handleContactEdit({ id, name, number });
+            setModalData({ id, name, number });
           }}
         >
           Edit

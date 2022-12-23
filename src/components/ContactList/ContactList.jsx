@@ -3,13 +3,8 @@ import PropTypes from 'prop-types';
 import { List } from './ContactList.styled';
 
 const ContactList = props => {
-  const {
-    contacts,
-    filterValue,
-    OnContactDelete,
-    OnModalOpen,
-    handleContactEdit,
-  } = props;
+  const { contacts, filterValue, OnContactDelete, OnModalOpen, setModalData } =
+    props;
 
   const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filterValue.toLowerCase())
@@ -25,7 +20,7 @@ const ContactList = props => {
             key={id}
             OnContactDelete={OnContactDelete}
             OnModalOpen={OnModalOpen}
-            handleContactEdit={handleContactEdit}
+            setModalData={setModalData}
           />
         );
       })}

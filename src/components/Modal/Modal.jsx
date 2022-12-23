@@ -14,9 +14,9 @@ const Modal = ({ modalData, OnContactEdit, OnModalClose }) => {
   return (
     <Formik
       initialValues={{ name, number, id }}
-      onSubmit={(values, { resetForm }) => {
+      onSubmit={values => {
         OnContactEdit(values);
-        resetForm();
+        OnModalClose();
       }}
     >
       {props => {
@@ -28,6 +28,7 @@ const Modal = ({ modalData, OnContactEdit, OnModalClose }) => {
                 as={Input}
                 type="text"
                 name="name"
+                autoFocus
                 pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
                 title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
                 required
@@ -44,16 +45,18 @@ const Modal = ({ modalData, OnContactEdit, OnModalClose }) => {
                 required
               />
             </Label>
-            <Button type="submit" disabled={props.isSubmitting}>
-              Edit contact
-            </Button>
-            <Button
-              type="button"
-              disabled={props.isSubmitting}
-              onClick={OnModalClose}
-            >
-              Cancel
-            </Button>
+            <div>
+              <Button type="submit" disabled={props.isSubmitting}>
+                Edit contact
+              </Button>
+              <Button
+                type="button"
+                disabled={props.isSubmitting}
+                onClick={OnModalClose}
+              >
+                Cancel
+              </Button>
+            </div>
           </StyledForm>
         );
       }}
@@ -64,7 +67,7 @@ const Modal = ({ modalData, OnContactEdit, OnModalClose }) => {
 Modal.propTypes = {
   OnModalClose: PropTypes.func.isRequired,
   OnContactEdit: PropTypes.func.isRequired,
-  contact: PropTypes.object.isRequired,
+  modalData: PropTypes.object.isRequired,
 };
 
 export default Modal;

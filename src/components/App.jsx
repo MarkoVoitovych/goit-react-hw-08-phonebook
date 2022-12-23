@@ -40,8 +40,17 @@ class App extends Component {
     }));
   };
 
-  handleContactEdit = contact => {
+  setModalData = contact => {
     this.setState({ modalData: contact });
+  };
+
+  handleContactEdit = async contact => {
+    const updatedContact = await mockAPI.editContact(contact);
+    this.setState(prevState => ({
+      contacts: prevState.contacts.map(contact =>
+        contact.id === updatedContact.data.id ? updatedContact.data : contact
+      ),
+    }));
   };
 
   handleContactDelete = async id => {
@@ -94,7 +103,7 @@ class App extends Component {
             filterValue={filter}
             OnContactDelete={this.handleContactDelete}
             OnModalOpen={this.toggleModal}
-            handleContactEdit={this.handleContactEdit}
+            setModalData={this.setModalData}
           />
         )}
         {isModalOpen && (
