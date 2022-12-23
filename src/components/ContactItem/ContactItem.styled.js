@@ -18,5 +18,9 @@ export const Button = styled.button`
   outline: none;
   border: 1px solid skyblue;
   border-radius: 4px;
+  margin-left: 15px;
+`;
+
+export const BtnWrapper = styled.div`
   margin-left: auto;
 `;

@@ -1,22 +1,32 @@
 import PropTypes from 'prop-types';
-import { Item, Text, Button } from './ContactItem.styled';
+import { Item, Text, Button, BtnWrapper } from './ContactItem.styled';
 
 const ContactItem = props => {
-  const { id, name, number, OnContactDelete } = props;
+  const { id, name, number, OnContactDelete, OnContactEdit } = props;
 
   return (
     <Item>
       <Text>
         {name}: {number}
       </Text>
-      <Button
-        type="button"
-        onClick={() => {
-          OnContactDelete(id);
-        }}
-      >
-        Delete
-      </Button>
+      <BtnWrapper>
+        <Button
+          type="button"
+          onClick={() => {
+            OnContactEdit();
+          }}
+        >
+          Edit
+        </Button>
+        <Button
+          type="button"
+          onClick={() => {
+            OnContactDelete(id);
+          }}
+        >
+          Delete
+        </Button>
+      </BtnWrapper>
     </Item>
   );
 };
@@ -26,6 +36,7 @@ ContactItem.propTypes = {
   number: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   OnContactDelete: PropTypes.func.isRequired,
+  OnContactEdit: PropTypes.func.isRequired,
 };
 
 export default ContactItem;
