@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import { Item, Text, Button, BtnWrapper } from './ContactItem.styled';
 
 const ContactItem = props => {
-  const { id, name, number, OnContactDelete, OnContactEdit } = props;
+  const { id, name, number, OnContactDelete, OnModalOpen, handleContactEdit } =
+    props;
 
   return (
     <Item>
@@ -13,7 +14,8 @@ const ContactItem = props => {
         <Button
           type="button"
           onClick={() => {
-            OnContactEdit();
+            OnModalOpen();
+            handleContactEdit({ id, name, number });
           }}
         >
           Edit
@@ -36,7 +38,7 @@ ContactItem.propTypes = {
   number: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   OnContactDelete: PropTypes.func.isRequired,
-  OnContactEdit: PropTypes.func.isRequired,
+  OnModalOpen: PropTypes.func.isRequired,
 };
 
 export default ContactItem;

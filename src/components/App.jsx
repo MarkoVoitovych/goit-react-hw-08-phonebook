@@ -5,12 +5,15 @@ import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Filter from './Filter';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
+import Modal from './Modal/Modal';
 
 class App extends Component {
   state = {
     contacts: [],
     filter: '',
     error: null,
+    modalData: null,
+    isModalOpen: false,
   };
 
   async componentDidMount() {
@@ -21,12 +24,6 @@ class App extends Component {
       this.setState({
         error: 'Ooops! Something went wrong. Try again later...',
       });
-    }
-  }
-
-  componentDidUpdate(_, prevState) {
-    if (prevState.contacts !== this.state.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
     }
   }
 
@@ -41,6 +38,10 @@ class App extends Component {
     this.setState(prevState => ({
       contacts: [...prevState.contacts, newContact.data],
     }));
+  };
+
+  handleContactEdit = contact => {
+    this.setState({ modalData: contact });
   };
 
   handleContactDelete = async id => {
@@ -59,6 +60,12 @@ class App extends Component {
     }
   };
 
+  toggleModal = () => {
+    this.setState(prevState => ({
+      isModalOpen: !prevState.isModalOpen,
+    }));
+  };
+
   handleFilterChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
@@ -69,7 +76,7 @@ class App extends Component {
   };
 
   render() {
-    const { contacts, filter, error } = this.state;
+    const { contacts, filter, error, modalData, isModalOpen } = this.state;
     return (
       <Container>
         <MainTitle>Phonebook</MainTitle>
@@ -86,6 +93,15 @@ class App extends Component {
             contacts={contacts}
             filterValue={filter}
             OnContactDelete={this.handleContactDelete}
+            OnModalOpen={this.toggleModal}
+            handleContactEdit={this.handleContactEdit}
+          />
+        )}
+        {isModalOpen && (
+          <Modal
+            modalData={modalData}
+            OnModalClose={this.toggleModal}
+            OnContactEdit={this.handleContactEdit}
           />
         )}
       </Container>

@@ -12,6 +12,11 @@ export function addContact(contact) {
   return newContact;
 }
 
+export function editContact(contact) {
+  const editedContact = axios.put(`/contacts/${contact.id}`, contact);
+  return editedContact;
+}
+
 export function deleteContact(id) {
   const removedContact = axios.delete(`/contacts/${id}`);
   return removedContact;
