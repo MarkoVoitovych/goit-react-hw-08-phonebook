@@ -23,12 +23,12 @@ function Modal({ modalData, OnContactEdit, toggleModal }) {
 
   useEffect(() => {
     window.addEventListener('keydown', handleCloseModal);
-    return window.removeEventListener('keydown', handleCloseModal);
+    return () => window.removeEventListener('keydown', handleCloseModal);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return createPortal(
-    <Overlay onClick={handleCloseModal} onKeyDown={handleCloseModal}>
+    <Overlay onClick={handleCloseModal}>
       <StyledModal>
         <Formik
           initialValues={{ name, number, id }}
