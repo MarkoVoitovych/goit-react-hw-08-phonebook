@@ -1,23 +1,18 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { List } from './ContactList.styled';
 import ContactItem from '../ContactItem';
 import Modal from '../Modal';
+import { useSelector } from 'react-redux';
+import { getContacts, getFilter, getModalStatus } from 'redux/selectors';
 
-function ContactList({
-  OnContactDelete,
-  OnContactEdit,
-  filterValue,
-  contacts,
-}) {
-  const [modalData, setModalData] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+function ContactList() {
+  const [modalData, setModalData] = useState({});
 
-  const toggleModal = () => {
-    setIsModalOpen(prevState => !prevState);
-  };
+  const contacts = useSelector(getContacts);
+  const filterValue = useSelector(getFilter);
+  const isModalOpen = useSelector(getModalStatus);
 
-  const filteredContacts = contacts.filter(contact =>
+  const filteredContacts = contacts?.filter(contact =>
     contact.name.toLowerCase().includes(filterValue.toLowerCase())
   );
 
@@ -32,28 +27,13 @@ function ContactList({
               name={name}
               number={number}
               setModalData={setModalData}
-              toggleModal={toggleModal}
-              OnContactDelete={OnContactDelete}
             />
           );
         })}
       </List>
-      {isModalOpen && (
-        <Modal
-          modalData={modalData}
-          toggleModal={toggleModal}
-          OnContactEdit={OnContactEdit}
-        />
-      )}
+      {isModalOpen && <Modal modalData={modalData} />}
     </>
   );
 }
-
-ContactList.propTypes = {
-  contacts: PropTypes.array.isRequired,
-  filterValue: PropTypes.string.isRequired,
-  OnContactDelete: PropTypes.func.isRequired,
-  OnContactEdit: PropTypes.func.isRequired,
-};
 
 export default ContactList;

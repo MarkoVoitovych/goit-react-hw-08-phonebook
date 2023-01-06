@@ -1,5 +1,7 @@
 import { createPortal } from 'react-dom';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Formik, Field } from 'formik';
 import {
@@ -11,21 +13,26 @@ import {
   Span,
   Button,
 } from './Modal.styled';
+import { editContact } from 'redux/contactsSlice';
+import { toggleModal } from 'redux/modalSlice';
 
-function Modal({ modalData, OnContactEdit, toggleModal }) {
+function Modal({ modalData }) {
   const { name, number, id } = modalData;
+  const dispatch = useDispatch();
 
-  const handleCloseModal = e => {
-    if (e.target === e.currentTarget || e.code === 'Escape') {
-      toggleModal();
-    }
-  };
+  const handleCloseModal = useCallback(
+    e => {
+      if (e.target === e.currentTarget || e.code === 'Escape') {
+        dispatch(toggleModal());
+      }
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     window.addEventListener('keydown', handleCloseModal);
     return () => window.removeEventListener('keydown', handleCloseModal);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [handleCloseModal]);
 
   return createPortal(
     <Overlay onClick={handleCloseModal}>
@@ -33,8 +40,8 @@ function Modal({ modalData, OnContactEdit, toggleModal }) {
         <Formik
           initialValues={{ name, number, id }}
           onSubmit={values => {
-            OnContactEdit(values);
-            toggleModal();
+            dispatch(editContact(values));
+            dispatch(toggleModal());
           }}
         >
           {props => {
@@ -70,7 +77,7 @@ function Modal({ modalData, OnContactEdit, toggleModal }) {
                   <Button
                     type="button"
                     disabled={props.isSubmitting}
-                    onClick={toggleModal}
+                    onClick={() => dispatch(toggleModal())}
                   >
                     Cancel
                   </Button>
@@ -86,8 +93,6 @@ function Modal({ modalData, OnContactEdit, toggleModal }) {
 }
 
 Modal.propTypes = {
-  toggleModal: PropTypes.func.isRequired,
-  OnContactEdit: PropTypes.func.isRequired,
   modalData: PropTypes.object.isRequired,
 };
 
