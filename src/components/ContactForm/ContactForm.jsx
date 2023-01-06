@@ -1,13 +1,25 @@
-import PropTypes from 'prop-types';
 import { Formik, Field } from 'formik';
 import { StyledForm, Label, Input, Span, Button } from './ContactForm.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/contactsSlice';
 
-const ContactForm = ({ OnContactAdd }) => {
+const ContactForm = () => {
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
+  const handleAddContact = contactInfo => {
+    if (contacts.find(contact => contact.name === contactInfo.name)) {
+      alert(`${contactInfo.name} is already in contacts.`);
+      return '';
+    }
+    dispatch(addContact(contactInfo));
+  };
+
   return (
     <Formik
       initialValues={{ name: '', number: '' }}
       onSubmit={(values, { resetForm }) => {
-        OnContactAdd(values);
+        handleAddContact(values);
         resetForm();
       }}
     >
@@ -23,6 +35,7 @@ const ContactForm = ({ OnContactAdd }) => {
                 pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
                 title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
                 required
+                autoFocus
               />
             </Label>
             <Label>
@@ -44,10 +57,6 @@ const ContactForm = ({ OnContactAdd }) => {
       }}
     </Formik>
   );
-};
-
-ContactForm.propTypes = {
-  OnContactAdd: PropTypes.func.isRequired,
 };
 
 export default ContactForm;
