@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { toggleModal } from 'redux/modalSlice';
 import { removeContact } from 'redux/operations';
 import { Item, Text, Button, BtnWrapper } from './ContactItem.styled';
 
 const ContactItem = props => {
-  const { id, name, number, setModalData } = props;
+  const { id, name, number, setModalData, toggleModal } = props;
 
   const dispatch = useDispatch();
 
@@ -18,7 +17,7 @@ const ContactItem = props => {
         <Button
           type="button"
           onClick={() => {
-            dispatch(toggleModal());
+            toggleModal();
             setModalData({ id, name, number });
           }}
         >
@@ -42,6 +41,7 @@ ContactItem.propTypes = {
   number: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   setModalData: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
 };
 
 export default ContactItem;

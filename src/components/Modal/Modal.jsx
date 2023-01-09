@@ -1,7 +1,6 @@
 import { createPortal } from 'react-dom';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Formik, Field } from 'formik';
 import {
@@ -13,20 +12,19 @@ import {
   Span,
   Button,
 } from './Modal.styled';
-import { toggleModal } from 'redux/modalSlice';
 import { editContact } from 'redux/operations';
 
-function Modal({ modalData }) {
+function Modal({ modalData, toggleModal }) {
   const { name, number, id } = modalData;
   const dispatch = useDispatch();
 
   const handleCloseModal = useCallback(
     e => {
       if (e.target === e.currentTarget || e.code === 'Escape') {
-        dispatch(toggleModal());
+        toggleModal();
       }
     },
-    [dispatch]
+    [toggleModal] // ЯК ПРАВИЛЬНО МЕМОЇЗУВАТИ???
   );
 
   useEffect(() => {
@@ -41,7 +39,7 @@ function Modal({ modalData }) {
           initialValues={{ name, number, id }}
           onSubmit={values => {
             dispatch(editContact(values));
-            dispatch(toggleModal());
+            toggleModal();
           }}
         >
           {props => {
@@ -77,7 +75,7 @@ function Modal({ modalData }) {
                   <Button
                     type="button"
                     disabled={props.isSubmitting}
-                    onClick={() => dispatch(toggleModal())}
+                    onClick={() => toggleModal()}
                   >
                     Cancel
                   </Button>
