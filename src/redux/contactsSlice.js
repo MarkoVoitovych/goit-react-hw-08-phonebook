@@ -55,7 +55,7 @@ const contactsSlice = createSlice({
         };
       })
       .addMatcher(isPendingAction, state => {
-        state.isLoading = false;
+        state.isLoading = true;
       })
       .addMatcher(isRejectedAction, (state, action) => {
         state.isLoading = false;
