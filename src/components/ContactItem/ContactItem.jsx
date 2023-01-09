@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/contactsSlice';
 import { toggleModal } from 'redux/modalSlice';
+import { removeContact } from 'redux/operations';
 import { Item, Text, Button, BtnWrapper } from './ContactItem.styled';
 
 const ContactItem = props => {
@@ -27,7 +27,7 @@ const ContactItem = props => {
         <Button
           type="button"
           onClick={() => {
-            dispatch(deleteContact(id));
+            dispatch(removeContact(id));
           }}
         >
           Delete

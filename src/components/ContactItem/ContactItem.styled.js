@@ -22,5 +22,7 @@ export const Button = styled.button`
 `;
 
 export const BtnWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
   margin-left: auto;
 `;

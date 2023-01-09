@@ -13,8 +13,8 @@ import {
   Span,
   Button,
 } from './Modal.styled';
-import { editContact } from 'redux/contactsSlice';
 import { toggleModal } from 'redux/modalSlice';
+import { editContact } from 'redux/operations';
 
 function Modal({ modalData }) {
   const { name, number, id } = modalData;

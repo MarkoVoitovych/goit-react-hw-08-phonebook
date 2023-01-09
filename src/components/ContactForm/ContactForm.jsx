@@ -2,11 +2,12 @@ import { Formik, Field } from 'formik';
 import { StyledForm, Label, Input, Span, Button } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
-import { addContact } from 'redux/contactsSlice';
+import { addContact } from 'redux/operations';
 
 const ContactForm = () => {
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
+
   const handleAddContact = contactInfo => {
     if (contacts.find(contact => contact.name === contactInfo.name)) {
       alert(`${contactInfo.name} is already in contacts.`);

@@ -1,35 +1,67 @@
-const { createSlice, nanoid } = require('@reduxjs/toolkit');
+import { createSlice } from '@reduxjs/toolkit';
+import {
+  addContact,
+  editContact,
+  fetchContacts,
+  removeContact,
+} from './operations';
+
+function isRejectedAction(action) {
+  return action.type.endsWith('rejected');
+}
+
+function isPendingAction(action) {
+  return action.type.endsWith('pending');
+}
 
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: [],
-  reducers: {
-    addContact: {
-      reducer(state, { payload }) {
-        return [...state, payload];
-      },
-      prepare(contact) {
+  initialState: {
+    items: [],
+    isLoading: false,
+    error: null,
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchContacts.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items = payload;
+      })
+      .addCase(addContact.fulfilled, (state, { payload }) => {
         return {
-          payload: {
-            ...contact,
-            id: nanoid(),
-          },
+          ...state,
+          isLoading: false,
+          error: null,
+          items: [...state.items, payload],
         };
-      },
-    },
-    deleteContact(state, { payload }) {
-      return state.filter(contact => contact.id !== payload);
-    },
-    editContact(state, { payload }) {
-      return state.map(contact => {
-        if (contact.id !== payload.id) {
-          return contact;
-        }
-        return payload;
+      })
+      .addCase(editContact.fulfilled, (state, { payload }) => {
+        return {
+          ...state,
+          isLoading: false,
+          error: null,
+          items: state.items.map(contact =>
+            contact.id !== payload.id ? contact : payload
+          ),
+        };
+      })
+      .addCase(removeContact.fulfilled, (state, { payload }) => {
+        return {
+          ...state,
+          isLoading: false,
+          error: null,
+          items: state.items.filter(contact => contact.id !== payload.id),
+        };
+      })
+      .addMatcher(isPendingAction, state => {
+        state.isLoading = false;
+      })
+      .addMatcher(isRejectedAction, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
-    },
   },
 });
 
-export const { addContact, deleteContact, editContact } = contactsSlice.actions;
 export const contactsReducer = contactsSlice.reducer;
