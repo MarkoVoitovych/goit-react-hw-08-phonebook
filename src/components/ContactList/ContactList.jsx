@@ -8,7 +8,6 @@ import { selectFilteredContacts } from 'redux/selectors';
 function ContactList() {
   const [modalData, setModalData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const filteredContacts = useSelector(selectFilteredContacts);
 
   const toggleModal = () => {

@@ -12,6 +12,9 @@ export const MainTitle = styled.h1`
 `;
 
 export const Title = styled.h2`
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 30px;
   font-size: 30px;
 `;

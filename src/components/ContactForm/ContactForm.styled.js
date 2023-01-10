@@ -30,8 +30,13 @@ export const Span = styled.span`
 `;
 
 export const Button = styled.button`
-  max-width: 110px;
-  height: 24px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 28px;
+  max-width: 125px;
   font-weight: 600;
   font-size: 14px;
   outline: none;

@@ -50,9 +50,7 @@ const ContactForm = () => {
                 required
               />
             </Label>
-            <Button type="submit" disabled={props.isSubmitting}>
-              Add contact
-            </Button>
+            <Button type="submit">Add contact</Button>
           </StyledForm>
         );
       }}
