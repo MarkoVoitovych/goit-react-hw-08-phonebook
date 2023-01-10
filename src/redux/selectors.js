@@ -8,7 +8,7 @@ export const selectError = state => state.contacts.error;
 
 export const selectIsLoading = state => state.contacts.isLoading;
 
-export const selectStatusContactsLoaded = createSelector(
+export const selectorAreContactsEmpty = createSelector(
   [selectContacts],
   contacts => {
     return contacts.length === 0;

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchContacts } from 'redux/operations';
-import { selectStatusContactsLoaded, selectError } from 'redux/selectors';
+import { selectorAreContactsEmpty, selectError } from 'redux/selectors';
 import { Container, MainTitle, Title } from './App.styled';
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
@@ -10,11 +10,11 @@ import Filter from './Filter';
 function App() {
   const dispatch = useDispatch();
   const error = useSelector(selectError);
-  const statusContactsLoaded = useSelector(selectStatusContactsLoaded);
+  const areContactsEmpty = useSelector(selectorAreContactsEmpty);
 
   useEffect(() => {
-    statusContactsLoaded && dispatch(fetchContacts());
-  }, [statusContactsLoaded, dispatch]);
+    areContactsEmpty && dispatch(fetchContacts());
+  }, [areContactsEmpty, dispatch]);
 
   return (
     <Container>
