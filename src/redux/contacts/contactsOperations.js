@@ -11,18 +11,16 @@ export const fetchContacts = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const { data } = await fetchContactsApi();
-      console.log('fetchedContact', data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
+  },
+  {
+    condition: (_, { getState }) => {
+      return Boolean(getState().auth.token);
+    },
   }
-  // {
-  //   condition: (_, { getState }) => {
-  //     const { items } = getState().contacts;
-  //     return !items.length;
-  //   },
-  // }
 );
 
 export const addContact = createAsyncThunk(
@@ -30,7 +28,6 @@ export const addContact = createAsyncThunk(
   async (contact, thunkAPI) => {
     try {
       const { data } = await addContactApi(contact);
-      console.log('addedContact', data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -42,8 +39,7 @@ export const editContact = createAsyncThunk(
   'contacts/editContact',
   async (contact, thunkAPI) => {
     try {
-      const { data } = await editContactApi(contact);
-      console.log('editedContact', data);
+      const data = await editContactApi(contact);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -55,8 +51,7 @@ export const removeContact = createAsyncThunk(
   'contacts/removeContact',
   async (contactId, thunkAPI) => {
     try {
-      const { data } = await removeContactApi(contactId);
-      console.log('deletedContact', data);
+      const data = await removeContactApi(contactId);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

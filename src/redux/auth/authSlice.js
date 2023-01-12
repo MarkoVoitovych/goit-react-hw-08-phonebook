@@ -10,8 +10,6 @@ const { createSlice } = require('@reduxjs/toolkit');
 const initialState = {
   user: { name: null, email: null },
   token: null,
-  isLoggedIn: false,
-  isLoading: false,
   error: null,
 };
 
@@ -23,24 +21,23 @@ const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, { payload }) => {
         state.user = payload.user;
         state.token = payload.token;
-        state.isLoggedIn = true;
       })
       .addCase(loginUser.fulfilled, (state, { payload }) => {
         state.user = payload.user;
         state.token = payload.token;
-        state.isLoggedIn = true;
       })
       .addCase(logoutUser.fulfilled, state => {
-        return { ...initialState };
-        // state.user = { name: null, email: null };
-        // state.token = null;
-        // state.isLoggedIn = false;
-        // state.isLoading = false;
-        // state.error = null;
+        state.user = { name: null, email: null };
+        state.token = null;
+        state.error = null;
       })
       .addCase(refreshUser.fulfilled, (state, { payload }) => {
-        state.user = payload;
-        state.isLoggedIn = true;
+        state.user = { ...payload };
+        state.error = null;
+      })
+      .addCase(refreshUser.rejected, state => {
+        state.token = null;
+        state.error = null;
       }),
 });
 

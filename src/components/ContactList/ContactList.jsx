@@ -3,7 +3,7 @@ import { List } from './ContactList.styled';
 import ContactItem from '../ContactItem';
 import Modal from '../Modal';
 import { useSelector } from 'react-redux';
-import { selectFilteredContacts } from 'redux/selectors';
+import { selectFilteredContacts } from 'redux/filter/filterSelectors';
 
 function ContactList() {
   const [modalData, setModalData] = useState({});

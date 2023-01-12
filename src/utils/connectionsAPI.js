@@ -43,9 +43,12 @@ export const addContactApi = async contact => {
 };
 
 export const editContactApi = async contact => {
-  // return await axios. ()
+  const { id, name, number } = contact;
+  const { data } = await axios.patch(`/contacts/${id}`, { name, number });
+  return data;
 };
 
 export const removeContactApi = async contactId => {
-  return await axios.delete('/contacts', contactId);
+  const { data } = await axios.delete(`/contacts/${contactId}`);
+  return data;
 };
