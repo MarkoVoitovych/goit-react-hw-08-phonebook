@@ -12,7 +12,7 @@ import {
   Span,
   Button,
 } from './Modal.styled';
-import { editContact } from 'redux/operations';
+import { editContact } from 'redux/contacts/contactsOperations';
 
 function Modal({ modalData, toggleModal }) {
   const { name, number, id } = modalData;

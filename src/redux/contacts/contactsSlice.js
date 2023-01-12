@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { logoutUser } from 'redux/auth/authOperations';
 import {
   addContact,
   editContact,
   fetchContacts,
   removeContact,
-} from './operations';
+} from './contactsOperations';
 
 function isRejectedAction(action) {
   return action.type.endsWith('rejected');
@@ -14,13 +15,15 @@ function isPendingAction(action) {
   return action.type.endsWith('pending');
 }
 
+const initialState = {
+  items: [],
+  isLoading: false,
+  error: null,
+};
+
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: {
-    items: [],
-    isLoading: false,
-    error: null,
-  },
+  initialState,
   reducers: {
     setError(state) {
       state.error = null;
@@ -28,6 +31,9 @@ const contactsSlice = createSlice({
   },
   extraReducers: builder => {
     builder
+      .addCase(logoutUser.fulfilled, _ => {
+        return { ...initialState };
+      })
       .addCase(fetchContacts.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.error = null;

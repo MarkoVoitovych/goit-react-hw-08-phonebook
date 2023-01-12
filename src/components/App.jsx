@@ -1,43 +1,30 @@
-import { useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { lazy, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Oval as Spiner } from 'react-loader-spinner';
-import { fetchContacts } from 'redux/operations';
-import { selectError, selectIsLoading } from 'redux/selectors';
-import { Container, MainTitle, Title } from './App.styled';
-import ContactForm from './ContactForm';
-import ContactList from './ContactList';
-import Filter from './Filter';
-import ErrorMessage from './ErrorMessage';
+import SharedLayout from './SharedLayout/SharedLayout';
+import { refreshUser } from 'redux/auth/authOperations';
+import { selectUserToken } from 'redux/auth/authSelectors';
+
+const RegisterPage = lazy(() => import('pages/register/RegisterPage'));
+const LoginPage = lazy(() => import('pages/login/LoginPage'));
+const ContactsPage = lazy(() => import('pages/contacts/ContactsPage'));
 
 function App() {
   const dispatch = useDispatch();
-  const error = useSelector(selectError);
-  const isLoading = useSelector(selectIsLoading);
-
+  const userToken = useSelector(selectUserToken);
   useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+    userToken && dispatch(refreshUser(userToken));
+  }, [dispatch, userToken]);
 
   return (
-    <Container>
-      <MainTitle>Phonebook</MainTitle>
-      <ContactForm />
-      <Title>
-        Contacts
-        {isLoading && (
-          <Spiner
-            height={25}
-            width={25}
-            color="#4fa94d"
-            visible={true}
-            ariaLabel="oval-loading"
-            strokeWidth={7}
-          />
-        )}
-      </Title>
-      <Filter />
-      {error ? <ErrorMessage /> : <ContactList />}
-    </Container>
+    <Routes>
+      <Route path="/" element={<SharedLayout />}>
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/contacts" element={<ContactsPage />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Route>
+    </Routes>
   );
 }
 

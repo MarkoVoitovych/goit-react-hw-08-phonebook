@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setError } from 'redux/contactsSlice';
+import { setError } from 'redux/contacts/contactsSlice';
 import { selectError } from 'redux/selectors';
 import { ErrorButton, ErrorText, ErrorWrapper } from './ErrorMessage.styled';
 

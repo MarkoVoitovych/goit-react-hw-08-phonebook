@@ -1,31 +1,36 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
-axios.defaults.baseURL = 'https://63a59c54f8f3f6d4abfae4ab.mockapi.io/';
+import {
+  addContactApi,
+  editContactApi,
+  fetchContactsApi,
+  removeContactApi,
+} from 'utils/connectionsAPI';
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
   async (_, thunkAPI) => {
     try {
-      const { data } = await axios.get('/contacts');
+      const { data } = await fetchContactsApi();
+      console.log('fetchedContact', data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
-  },
-  {
-    condition: (_, { getState }) => {
-      const { items } = getState().contacts;
-      return !items.length;
-    },
   }
+  // {
+  //   condition: (_, { getState }) => {
+  //     const { items } = getState().contacts;
+  //     return !items.length;
+  //   },
+  // }
 );
 
 export const addContact = createAsyncThunk(
   'contacts/addContact',
   async (contact, thunkAPI) => {
     try {
-      const { data } = await axios.post('/contacts', contact);
+      const { data } = await addContactApi(contact);
+      console.log('addedContact', data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -37,7 +42,8 @@ export const editContact = createAsyncThunk(
   'contacts/editContact',
   async (contact, thunkAPI) => {
     try {
-      const { data } = await axios.put(`/contacts/${contact.id}`, contact);
+      const { data } = await editContactApi(contact);
+      console.log('editedContact', data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -47,9 +53,10 @@ export const editContact = createAsyncThunk(
 
 export const removeContact = createAsyncThunk(
   'contacts/removeContact',
-  async (id, thunkAPI) => {
+  async (contactId, thunkAPI) => {
     try {
-      const { data } = await axios.delete(`/contacts/${id}`);
+      const { data } = await removeContactApi(contactId);
+      console.log('deletedContact', data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
