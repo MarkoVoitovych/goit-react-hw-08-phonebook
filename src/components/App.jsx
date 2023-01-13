@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { lazy, useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SharedLayout from './SharedLayout';
 import { refreshUser } from 'redux/auth/authOperations';
@@ -28,24 +28,26 @@ function App() {
   };
 
   return (
-    <Routes>
-      <Route path="/" element={<SharedLayout />}>
-        <Route index element={<PublicRoute component={<HomePage />} />} />
-        <Route
-          path="register"
-          element={<PublicRoute restricted component={<RegisterPage />} />}
-        />
-        <Route
-          path="login"
-          element={<PublicRoute restricted component={<LoginPage />} />}
-        />
-        <Route
-          path="contacts"
-          element={<PrivateRoute component={<ContactsPage />} />}
-        />
-        <Route path="*" element={<Navigate to={isAuth ? '/' : '/login'} />} />
-      </Route>
-    </Routes>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        <Route path="/" element={<SharedLayout />}>
+          <Route index element={<PublicRoute component={<HomePage />} />} />
+          <Route
+            path="register"
+            element={<PublicRoute restricted component={<RegisterPage />} />}
+          />
+          <Route
+            path="login"
+            element={<PublicRoute restricted component={<LoginPage />} />}
+          />
+          <Route
+            path="contacts"
+            element={<PrivateRoute component={<ContactsPage />} />}
+          />
+          <Route path="*" element={<Navigate to={isAuth ? '/' : '/login'} />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }
 

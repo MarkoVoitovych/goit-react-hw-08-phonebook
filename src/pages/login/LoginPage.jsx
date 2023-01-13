@@ -28,7 +28,6 @@ function LoginPage() {
 
   return (
     <>
-      <h1>LoginPage</h1>
       <AuthForm
         options={formOptions}
         initialValues={initialValues}

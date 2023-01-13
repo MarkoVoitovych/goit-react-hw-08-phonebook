@@ -23,7 +23,7 @@ function SharedLayout() {
         )}
         {isAuth && <UserMenu />}
       </Header>
-      <Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
         <Outlet />
       </Suspense>
     </Container>

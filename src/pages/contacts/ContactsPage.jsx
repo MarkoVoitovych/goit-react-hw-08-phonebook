@@ -20,7 +20,7 @@ function ContactsPage() {
 
   return (
     <Container>
-      <MainTitle>Phonebook</MainTitle>
+      <MainTitle>ThePhonebook</MainTitle>
       <ContactForm />
       <Title>
         Contacts

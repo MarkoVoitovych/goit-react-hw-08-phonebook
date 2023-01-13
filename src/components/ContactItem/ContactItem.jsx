@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { removeContact } from 'redux/contacts/contactsOperations';
 import { Item, Text, Button, BtnWrapper } from './ContactItem.styled';
+import { AiOutlinePhone } from 'react-icons/ai';
 
 const ContactItem = props => {
   const { id, name, number, setModalData, toggleModal } = props;
@@ -11,7 +12,7 @@ const ContactItem = props => {
   return (
     <Item>
       <Text>
-        {name}: {number}
+        <AiOutlinePhone size={16} /> {name}: {number}
       </Text>
       <BtnWrapper>
         <Button

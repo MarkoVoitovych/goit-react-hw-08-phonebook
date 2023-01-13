@@ -11,6 +11,7 @@ import {
   Input,
   Span,
   Button,
+  BtnWrapper,
 } from './Modal.styled';
 import { editContact } from 'redux/contacts/contactsOperations';
 
@@ -68,7 +69,7 @@ function Modal({ modalData, toggleModal }) {
                     required
                   />
                 </Label>
-                <div>
+                <BtnWrapper>
                   <Button type="submit" disabled={props.isSubmitting}>
                     Edit contact
                   </Button>
@@ -79,7 +80,7 @@ function Modal({ modalData, toggleModal }) {
                   >
                     Cancel
                   </Button>
-                </div>
+                </BtnWrapper>
               </StyledForm>
             );
           }}
