@@ -4,10 +4,11 @@
   "private": true,
   "homepage": "https://markovoitovych.github.io/goit-react-hw-08-phonebook/",
   "dependencies": {
-    "@chakra-ui/react": "^2.4.8",
-    "@chakra-ui/theme": "^2.2.5",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
+    "@emotion/react": "^11.10.8",
+    "@emotion/styled": "^11.10.8",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.12.2",
+    "@mui/styled-engine-sc": "^5.12.0",
     "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
@@ -23,7 +24,7 @@
     "react-router-dom": "^6.6.2",
     "react-scripts": "5.0.1",
     "redux-persist": "^6.0.0",
-    "styled-components": "^5.3.6",
+    "styled-components": "^5.3.10",
     "web-vitals": "^2.1.3"
   },
   "scripts": {

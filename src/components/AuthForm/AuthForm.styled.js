@@ -1,4 +1,6 @@
+import { styled as styledMui } from '@mui/system';
 import styled from 'styled-components';
+import { Button as ButtonMUI, TextField } from '@mui/material';
 
 export const Form = styled.form`
   display: flex;
@@ -16,24 +18,12 @@ export const Label = styled.label`
   margin-bottom: 15px;
 `;
 
-export const Input = styled.input`
-  max-width: 240px;
-  height: 24px;
-  font-size: 16px;
-  outline: none;
-  border: 1px solid grey;
-  border-radius: 3px;
-  padding: 5px;
-`;
+export const Input = styledMui(TextField)``;
 
-export const Span = styled.span``;
-
-export const Button = styled.button`
+export const Button = styledMui(ButtonMUI)`
   padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 28px;
+  margin-top: 15px;
+  height: 38px;
   max-width: 125px;
   font-weight: 700;
   font-size: 14px;

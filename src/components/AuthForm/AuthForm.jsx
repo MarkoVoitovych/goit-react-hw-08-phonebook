@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Form, Input, Label, Span } from './AuthForm.styled';
+import { Button, Form, Input, Label } from './AuthForm.styled';
 
 function AuthForm({ options = [], initialValues = {}, onSubmit, buttonTitle }) {
   const [form, setForm] = useState(initialValues);
@@ -19,7 +19,6 @@ function AuthForm({ options = [], initialValues = {}, onSubmit, buttonTitle }) {
     <Form onSubmit={handleSubmit}>
       {options.map(({ label, name, type, placeholder }) => (
         <Label key={name}>
-          <Span>{label}</Span>
           <Input
             type={type}
             name={name}
@@ -27,6 +26,8 @@ function AuthForm({ options = [], initialValues = {}, onSubmit, buttonTitle }) {
             onChange={handleChange}
             placeholder={placeholder}
             required
+            label={label}
+            variant="standard"
           />
         </Label>
       ))}

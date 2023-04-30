@@ -1,5 +1,7 @@
-import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { AppBar } from '@mui/material';
+import { styled as styledMui } from '@mui/system';
+import styled from 'styled-components';
 
 export const Container = styled.div`
   max-width: 1200px;
@@ -7,15 +9,17 @@ export const Container = styled.div`
   padding: 0 20px;
 `;
 
-export const Header = styled.header`
+export const Header = styledMui(AppBar)`
+  position: static;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  padding: 5px 0;
+  padding: 10px;
   border-bottom: 2px solid black;
-`;
+ `;
 
 export const SiteNav = styled.nav`
-  margin-left: 15px;
+  margin-left: 5px;
   display: flex;
   gap: 20px;
 `;
@@ -25,8 +29,7 @@ export const StyledLink = styled(NavLink)`
   color: black;
   font-size: 18px;
   text-decoration: none;
-
   &.active {
-    color: red;
+    color: yellow;
   }
 `;

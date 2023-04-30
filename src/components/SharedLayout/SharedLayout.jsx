@@ -12,13 +12,13 @@ function SharedLayout() {
     <Container>
       <Header>
         <SiteNav>
-          <StyledLink to="/">home</StyledLink>
+          <StyledLink to="/">Home</StyledLink>
           {isAuth && <StyledLink to="/contacts">contacts</StyledLink>}
         </SiteNav>
         {!isAuth && (
           <SiteNav>
-            <StyledLink to="/register">register</StyledLink>
-            <StyledLink to="/login">login</StyledLink>
+            <StyledLink to="/register">Register</StyledLink>
+            <StyledLink to="/login">Login</StyledLink>
           </SiteNav>
         )}
         {isAuth && <UserMenu />}

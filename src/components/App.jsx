@@ -1,10 +1,12 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import SharedLayout from './SharedLayout';
-import { refreshUser } from 'redux/auth/authOperations';
-import { selectIsAuth } from 'redux/auth/authSelectors';
 import HomePage from 'pages/home/HomePage';
+
+import { selectIsAuth } from 'redux/auth/authSelectors';
+import { refreshUser } from 'redux/auth/authOperations';
 
 const RegisterPage = lazy(() => import('pages/register/RegisterPage'));
 const LoginPage = lazy(() => import('pages/login/LoginPage'));
